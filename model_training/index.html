@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NutriValue - Food Recognition</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 30px;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input[type=file] {
+            margin: 10px;
+        }
+        img {
+            margin-top: 20px;
+            max-width: 300px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        .result {
+            margin-top: 25px;
+            font-size: 18px;
+            color: #444;
+        }
+        .highlight {
+            font-weight: 600;
+            color: #2b7a78;
+        }
+        .tip {
+            margin-top: 15px;
+            font-style: italic;
+            color: #555;
+        }
+        .card {
+            display: inline-block;
+            background: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🍱 NutriValue - Food Image Recognition</h1>
+
+    <form action="/predict" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <br>
+        <input type="submit" value="Predict">
+    </form>
+
+    {% if prediction %}
+        <div class="card">
+            <h2>🍽️ Predicted Dish: <span class="highlight">{{ prediction }}</span></h2>
+            <p>🔥 Confidence: <span class="highlight">{{ confidence }}%</span></p>
+            
+            {% if calories %}
+                <p>🥗 Estimated Calories: <span class="highlight">{{ calories }} kcal</span></p>
+            {% endif %}
+            
+            {% if tip %}
+                <p class="tip">💡 Tip: {{ tip }}</p>
+            {% endif %}
+            
+            <img src="{{ img_path }}" alt="Uploaded Image">
+        </div>
+    {% endif %}
+</body>
+</html>
